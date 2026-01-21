@@ -1,0 +1,1148 @@
+<!doctype html>
+<html lang="en" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LexiGuard - AI Legal Reasoning &amp; Compliance Intelligence</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap" rel="stylesheet">
+  <style>
+        body {
+            box-sizing: border-box;
+        }
+        
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .heading-font {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+        }
+        
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+        
+        .risk-critical {
+            background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+        }
+        
+        .risk-high {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+        }
+        
+        .risk-medium {
+            background: linear-gradient(135deg, #eab308 0%, #ca8a04 100%);
+        }
+        
+        .risk-low {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        }
+        
+        .pulse-glow {
+            animation: pulse-glow 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.5); }
+            50% { box-shadow: 0 0 40px rgba(59, 130, 246, 0.8); }
+        }
+        
+        .slide-in {
+            animation: slide-in 0.5s ease-out;
+        }
+        
+        @keyframes slide-in {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .spinner {
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top-color: #3b82f6;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .tab-active {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+        }
+        
+        .tab-inactive {
+            background: rgba(255, 255, 255, 0.05);
+            color: #94a3b8;
+        }
+        
+        .tab-inactive:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #e2e8f0;
+        }
+        
+        .severity-badge {
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .badge-critical {
+            background: #dc2626;
+            color: white;
+        }
+        
+        .badge-high {
+            background: #f59e0b;
+            color: white;
+        }
+        
+        .badge-medium {
+            background: #eab308;
+            color: #1f2937;
+        }
+        
+        .badge-low {
+            background: #10b981;
+            color: white;
+        }
+        
+        .clause-card {
+            transition: all 0.3s ease;
+        }
+        
+        .clause-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+        }
+        
+        .issue-card {
+            border-left: 4px solid;
+            transition: all 0.3s ease;
+        }
+        
+        .issue-card:hover {
+            transform: translateX(4px);
+        }
+        
+        .stat-card {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, transparent 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .stat-card:hover::before {
+            opacity: 1;
+        }
+        
+        .heatmap-cell {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .heatmap-cell:hover {
+            transform: scale(1.05);
+            z-index: 10;
+        }
+        
+        .timeline-item {
+            position: relative;
+            padding-left: 30px;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: -20px;
+            width: 2px;
+            background: linear-gradient(180deg, #3b82f6 0%, transparent 100%);
+        }
+        
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            left: -4px;
+            top: 8px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #3b82f6;
+            box-shadow: 0 0 10px rgba(59, 130, 246, 0.8);
+        }
+        
+        .doc-type-tag {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        .type-contract {
+            background: #1e40af;
+            color: #dbeafe;
+        }
+        
+        .type-policy {
+            background: #7c3aed;
+            color: #ede9fe;
+        }
+        
+        .type-regulation {
+            background: #059669;
+            color: #d1fae5;
+        }
+        
+        .progress-bar {
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #3b82f6 0%, #8b5cf6 100%);
+            transition: width 0.5s ease;
+        }
+    </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="/_sdk/element_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full gradient-bg text-white overflow-auto">
+  <div class="w-full h-full"><!-- Header -->
+   <header class="glass-panel border-b border-white/10">
+    <div class="max-w-7xl mx-auto px-6 py-4">
+     <div class="flex items-center justify-between">
+      <div class="flex items-center space-x-4">
+       <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center pulse-glow">
+        <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+        </svg>
+       </div>
+       <div>
+        <h1 class="text-2xl font-bold heading-font tracking-tight">LexiGuard</h1>
+        <p class="text-sm text-slate-400">AI Legal Reasoning &amp; Compliance Intelligence</p>
+       </div>
+      </div>
+      <div class="flex items-center space-x-4"><button onclick="showUploadModal()" class="px-6 py-2.5 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-600 rounded-lg font-semibold transition-all duration-300 flex items-center space-x-2 shadow-lg">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+        </svg><span>Upload Document</span> </button>
+      </div>
+     </div>
+    </div>
+   </header><!-- Main Content -->
+   <main class="max-w-7xl mx-auto px-6 py-8"><!-- Tab Navigation -->
+    <div class="flex space-x-2 mb-8"><button onclick="switchTab('dashboard')" id="tab-dashboard" class="tab-active px-6 py-3 rounded-lg font-semibold transition-all duration-300"> Dashboard </button> <button onclick="switchTab('documents')" id="tab-documents" class="tab-inactive px-6 py-3 rounded-lg font-semibold transition-all duration-300"> Documents </button> <button onclick="switchTab('analysis')" id="tab-analysis" class="tab-inactive px-6 py-3 rounded-lg font-semibold transition-all duration-300"> Compliance Analysis </button> <button onclick="switchTab('remediation')" id="tab-remediation" class="tab-inactive px-6 py-3 rounded-lg font-semibold transition-all duration-300"> Remediation Plan </button>
+    </div><!-- Dashboard Tab -->
+    <div id="content-dashboard" class="tab-content">
+     <div class="slide-in"><!-- Stats Overview -->
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+       <div class="glass-panel rounded-xl p-6 stat-card">
+        <div class="flex items-center justify-between mb-3">
+         <div class="w-12 h-12 rounded-lg bg-blue-500/20 flex items-center justify-center">
+          <svg class="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+          </svg>
+         </div>
+        </div>
+        <div class="text-3xl font-bold heading-font mb-1" id="stat-documents">
+         0
+        </div>
+        <div class="text-sm text-slate-400">
+         Documents Analyzed
+        </div>
+       </div>
+       <div class="glass-panel rounded-xl p-6 stat-card">
+        <div class="flex items-center justify-between mb-3">
+         <div class="w-12 h-12 rounded-lg bg-red-500/20 flex items-center justify-center">
+          <svg class="w-6 h-6 text-red-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+          </svg>
+         </div>
+        </div>
+        <div class="text-3xl font-bold heading-font mb-1" id="stat-critical">
+         0
+        </div>
+        <div class="text-sm text-slate-400">
+         Critical Issues
+        </div>
+       </div>
+       <div class="glass-panel rounded-xl p-6 stat-card">
+        <div class="flex items-center justify-between mb-3">
+         <div class="w-12 h-12 rounded-lg bg-amber-500/20 flex items-center justify-center">
+          <svg class="w-6 h-6 text-amber-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+          </svg>
+         </div>
+        </div>
+        <div class="text-3xl font-bold heading-font mb-1" id="stat-high">
+         0
+        </div>
+        <div class="text-sm text-slate-400">
+         High Priority
+        </div>
+       </div>
+       <div class="glass-panel rounded-xl p-6 stat-card">
+        <div class="flex items-center justify-between mb-3">
+         <div class="w-12 h-12 rounded-lg bg-purple-500/20 flex items-center justify-center">
+          <svg class="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+          </svg>
+         </div>
+        </div>
+        <div class="text-3xl font-bold heading-font mb-1" id="stat-clauses">
+         0
+        </div>
+        <div class="text-sm text-slate-400">
+         Clauses Extracted
+        </div>
+       </div>
+      </div><!-- Welcome Section -->
+      <div class="glass-panel rounded-xl p-8 mb-8">
+       <div class="text-center max-w-3xl mx-auto">
+        <h2 class="text-3xl font-bold heading-font mb-4">Welcome to LexiGuard</h2>
+        <p class="text-lg text-slate-300 mb-6">Powered by <span class="font-semibold text-blue-400">Google Gemini</span>, LexiGuard performs deep legal reasoning across contracts, regulations, and policies to identify hidden compliance risks before they become violations.</p>
+        <div class="flex items-center justify-center space-x-8 text-sm">
+         <div class="flex items-center space-x-2">
+          <svg class="w-5 h-5 text-green-400" fill="currentColor" viewbox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+          </svg><span class="text-slate-300">Multi-Document Reasoning</span>
+         </div>
+         <div class="flex items-center space-x-2">
+          <svg class="w-5 h-5 text-green-400" fill="currentColor" viewbox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+          </svg><span class="text-slate-300">Semantic Conflict Detection</span>
+         </div>
+         <div class="flex items-center space-x-2">
+          <svg class="w-5 h-5 text-green-400" fill="currentColor" viewbox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+          </svg><span class="text-slate-300">Actionable Remediation</span>
+         </div>
+        </div>
+       </div>
+      </div><!-- Quick Actions -->
+      <div class="glass-panel rounded-xl p-6">
+       <h3 class="text-xl font-bold heading-font mb-4">Quick Actions</h3>
+       <div class="grid grid-cols-1 md:grid-cols-3 gap-4"><button onclick="showUploadModal()" class="p-6 glass-panel rounded-lg hover:bg-white/10 transition-all duration-300 text-left group">
+         <div class="w-12 h-12 rounded-lg bg-blue-500/20 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+          <svg class="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+          </svg>
+         </div><h4 class="font-bold mb-2">Upload Document</h4><p class="text-sm text-slate-400">Upload contracts, policies, or regulatory documents for analysis</p></button> <button onclick="switchTab('documents')" class="p-6 glass-panel rounded-lg hover:bg-white/10 transition-all duration-300 text-left group">
+         <div class="w-12 h-12 rounded-lg bg-purple-500/20 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+          <svg class="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+          </svg>
+         </div><h4 class="font-bold mb-2">View Documents</h4><p class="text-sm text-slate-400">Review all uploaded documents and their analysis status</p></button> <button onclick="switchTab('analysis')" class="p-6 glass-panel rounded-lg hover:bg-white/10 transition-all duration-300 text-left group">
+         <div class="w-12 h-12 rounded-lg bg-amber-500/20 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+          <svg class="w-6 h-6 text-amber-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+          </svg>
+         </div><h4 class="font-bold mb-2">Run Analysis</h4><p class="text-sm text-slate-400">Perform deep compliance analysis across regulations</p></button>
+       </div>
+      </div>
+     </div>
+    </div><!-- Documents Tab -->
+    <div id="content-documents" class="tab-content hidden">
+     <div class="glass-panel rounded-xl p-6">
+      <div class="flex items-center justify-between mb-6">
+       <h2 class="text-2xl font-bold heading-font">Uploaded Documents</h2><button onclick="loadDocuments()" class="px-4 py-2 glass-panel rounded-lg hover:bg-white/10 transition-all duration-300 flex items-center space-x-2">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+        </svg><span>Refresh</span> </button>
+      </div>
+      <div id="documents-list" class="space-y-4">
+       <div class="text-center py-12 text-slate-400">
+        <svg class="w-16 h-16 mx-auto mb-4 opacity-50" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+        </svg>
+        <p>No documents uploaded yet</p>
+       </div>
+      </div>
+     </div>
+    </div><!-- Analysis Tab -->
+    <div id="content-analysis" class="tab-content hidden">
+     <div class="space-y-6"><!-- Clauses Section -->
+      <div class="glass-panel rounded-xl p-6">
+       <h2 class="text-2xl font-bold heading-font mb-6">Extracted Clauses</h2>
+       <div id="clauses-container" class="space-y-4">
+        <div class="text-center py-12 text-slate-400">
+         <svg class="w-16 h-16 mx-auto mb-4 opacity-50" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+         </svg>
+         <p>Select a document to extract clauses</p>
+        </div>
+       </div>
+      </div><!-- Compliance Issues -->
+      <div class="glass-panel rounded-xl p-6">
+       <h2 class="text-2xl font-bold heading-font mb-6">Compliance Issues</h2>
+       <div id="issues-container" class="space-y-4">
+        <div class="text-center py-12 text-slate-400">
+         <svg class="w-16 h-16 mx-auto mb-4 opacity-50" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+         </svg>
+         <p>Run compliance analysis to identify issues</p>
+        </div>
+       </div>
+      </div><!-- Risk Heatmap -->
+      <div class="glass-panel rounded-xl p-6">
+       <h2 class="text-2xl font-bold heading-font mb-6">Risk Heatmap</h2>
+       <div id="heatmap-container">
+        <div class="text-center py-12 text-slate-400">
+         <svg class="w-16 h-16 mx-auto mb-4 opacity-50" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+         </svg>
+         <p>Risk visualization will appear here after analysis</p>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div><!-- Remediation Tab -->
+    <div id="content-remediation" class="tab-content hidden">
+     <div class="glass-panel rounded-xl p-6">
+      <div class="flex items-center justify-between mb-6">
+       <h2 class="text-2xl font-bold heading-font">Remediation Plan</h2><button onclick="generateRemediationPlanFromTab()" id="generate-remediation-btn" class="px-6 py-2.5 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-500 hover:to-green-600 rounded-lg font-semibold transition-all duration-300 flex items-center space-x-2 shadow-lg">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+        </svg><span>Generate Plan</span> </button>
+      </div>
+      <div id="remediation-container">
+       <div class="text-center py-12 text-slate-400">
+        <svg class="w-16 h-16 mx-auto mb-4 opacity-50" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+        </svg>
+        <p class="mb-4">Click "Generate Plan" to create a prioritized remediation plan</p>
+        <p class="text-sm text-slate-500">Make sure you have analyzed a document first</p>
+       </div>
+      </div>
+     </div>
+    </div>
+   </main><!-- Upload Modal -->
+   <div id="upload-modal" class="hidden fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+    <div class="glass-panel rounded-2xl p-8 max-w-2xl w-full slide-in">
+     <div class="flex items-center justify-between mb-6">
+      <h3 class="text-2xl font-bold heading-font">Upload Legal Document</h3><button onclick="closeUploadModal()" class="w-10 h-10 rounded-lg hover:bg-white/10 transition-all duration-300 flex items-center justify-center">
+       <svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+       </svg></button>
+     </div>
+     <form id="upload-form" class="space-y-6">
+      <div><label for="doc-type" class="block text-sm font-semibold mb-2">Document Type</label> <select id="doc-type" class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-500/50 outline-none transition-all text-white cursor-pointer hover:bg-white/10" style="color-scheme: dark;"> <option value="contract" class="bg-slate-800 text-white py-2">Contract</option> <option value="policy" class="bg-slate-800 text-white py-2">Company Policy</option> <option value="regulation" class="bg-slate-800 text-white py-2">Regulation/Law</option> </select>
+      </div>
+      <div><label for="file-input" class="block text-sm font-semibold mb-2">Select File</label>
+       <div class="border-2 border-dashed border-white/20 rounded-lg p-8 text-center hover:border-blue-500/50 transition-all cursor-pointer" id="drop-zone"><input type="file" id="file-input" accept=".pdf,.docx,.txt" class="hidden" onchange="handleFileSelect(event)">
+        <svg class="w-12 h-12 mx-auto mb-4 text-slate-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+        </svg>
+        <p class="text-slate-300 mb-2">Click to browse or drag and drop</p>
+        <p class="text-sm text-slate-500">Supports PDF, DOCX, TXT files</p>
+        <p id="selected-file" class="text-sm text-blue-400 mt-3 hidden"></p>
+       </div>
+      </div>
+      <div class="flex space-x-4"><button type="submit" class="flex-1 px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-600 rounded-lg font-semibold transition-all duration-300"> Upload &amp; Analyze </button> <button type="button" onclick="closeUploadModal()" class="px-6 py-3 glass-panel hover:bg-white/10 rounded-lg font-semibold transition-all duration-300"> Cancel </button>
+      </div>
+     </form>
+     <div id="upload-progress" class="hidden mt-6">
+      <div class="flex items-center justify-between mb-2"><span class="text-sm font-semibold">Processing...</span> <span class="text-sm text-slate-400" id="progress-text">0%</span>
+      </div>
+      <div class="progress-bar">
+       <div class="progress-fill" id="progress-bar" style="width: 0%"></div>
+      </div>
+     </div>
+    </div>
+   </div><!-- Loading Overlay -->
+   <div id="loading-overlay" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50">
+    <div class="text-center">
+     <div class="spinner mx-auto mb-4"></div>
+     <p class="text-lg font-semibold" id="loading-message">Processing...</p>
+     <p class="text-sm text-slate-400 mt-2" id="loading-detail">Please wait</p>
+    </div>
+   </div><!-- Issue Detail Modal -->
+   <div id="issue-modal" class="hidden fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+    <div class="glass-panel rounded-2xl p-8 max-w-4xl w-full max-h-[90vh] overflow-y-auto slide-in">
+     <div class="flex items-center justify-between mb-6">
+      <h3 class="text-2xl font-bold heading-font">Issue Details</h3><button onclick="closeIssueModal()" class="w-10 h-10 rounded-lg hover:bg-white/10 transition-all duration-300 flex items-center justify-center">
+       <svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+       </svg></button>
+     </div>
+     <div id="issue-detail-content"><!-- Content will be populated dynamically -->
+     </div>
+    </div>
+   </div>
+  </div>
+  <script>
+        let currentDocId = null;
+        let currentAnalysis = null;
+
+        // Tab Switching
+        function switchTab(tabName) {
+            // Update tab buttons
+            document.querySelectorAll('[id^="tab-"]').forEach(btn => {
+                btn.classList.remove('tab-active');
+                btn.classList.add('tab-inactive');
+            });
+            document.getElementById(`tab-${tabName}`).classList.remove('tab-inactive');
+            document.getElementById(`tab-${tabName}`).classList.add('tab-active');
+
+            // Update content
+            document.querySelectorAll('[id^="content-"]').forEach(content => {
+                content.classList.add('hidden');
+            });
+            document.getElementById(`content-${tabName}`).classList.remove('hidden');
+
+            // Load data if needed
+            if (tabName === 'documents') {
+                loadDocuments();
+            }
+        }
+
+        // Upload Modal
+        function showUploadModal() {
+            document.getElementById('upload-modal').classList.remove('hidden');
+        }
+
+        function closeUploadModal() {
+            document.getElementById('upload-modal').classList.add('hidden');
+            document.getElementById('upload-form').reset();
+            document.getElementById('selected-file').classList.add('hidden');
+        }
+
+        // File Selection
+        function handleFileSelect(event) {
+            const file = event.target.files[0];
+            if (file) {
+                document.getElementById('selected-file').textContent = `Selected: ${file.name}`;
+                document.getElementById('selected-file').classList.remove('hidden');
+            }
+        }
+
+        // Drag and drop
+        const dropZone = document.getElementById('drop-zone');
+        dropZone.addEventListener('click', () => {
+            document.getElementById('file-input').click();
+        });
+
+        dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropZone.classList.add('border-blue-500');
+        });
+
+        dropZone.addEventListener('dragleave', () => {
+            dropZone.classList.remove('border-blue-500');
+        });
+
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.classList.remove('border-blue-500');
+            const file = e.dataTransfer.files[0];
+            if (file) {
+                document.getElementById('file-input').files = e.dataTransfer.files;
+                handleFileSelect({target: {files: [file]}});
+            }
+        });
+
+        // Upload Form
+        document.getElementById('upload-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const fileInput = document.getElementById('file-input');
+            const docType = document.getElementById('doc-type').value;
+            
+            if (!fileInput.files[0]) {
+                showNotification('Please select a file', 'error');
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('file', fileInput.files[0]);
+            formData.append('doc_type', docType);
+
+            showLoading('Uploading document...', 'Extracting text and analyzing content');
+            document.getElementById('upload-progress').classList.remove('hidden');
+
+            try {
+                // Simulate progress
+                let progress = 0;
+                const progressInterval = setInterval(() => {
+                    progress += 10;
+                    if (progress <= 90) {
+                        document.getElementById('progress-bar').style.width = `${progress}%`;
+                        document.getElementById('progress-text').textContent = `${progress}%`;
+                    }
+                }, 300);
+
+                const response = await fetch('/api/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                clearInterval(progressInterval);
+                document.getElementById('progress-bar').style.width = '100%';
+                document.getElementById('progress-text').textContent = '100%';
+
+                const result = await response.json();
+
+                if (result.success) {
+                    currentDocId = result.doc_id;
+                    showNotification('Document uploaded successfully!', 'success');
+                    closeUploadModal();
+                    
+                    // Auto-extract clauses
+                    setTimeout(() => {
+                        extractClauses(result.doc_id);
+                    }, 1000);
+                } else {
+                    showNotification(result.error || 'Upload failed', 'error');
+                }
+            } catch (error) {
+                showNotification('Upload error: ' + error.message, 'error');
+            } finally {
+                hideLoading();
+                document.getElementById('upload-progress').classList.add('hidden');
+            }
+        });
+
+        // Extract Clauses
+        async function extractClauses(docId) {
+            showLoading('Extracting clauses...', 'Using AI to identify and classify legal clauses');
+            
+            try {
+                const response = await fetch('/api/extract-clauses', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({doc_id: docId})
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    currentDocId = docId;
+                    displayClauses(result.clauses);
+                    updateStats();
+                    showNotification(`Extracted ${result.clauses.length} clauses successfully!`, 'success');
+                    
+                    // Auto-analyze compliance
+                    setTimeout(() => {
+                        analyzeCompliance(docId);
+                    }, 1000);
+                } else {
+                    showNotification(result.error || 'Extraction failed', 'error');
+                }
+            } catch (error) {
+                showNotification('Extraction error: ' + error.message, 'error');
+            } finally {
+                hideLoading();
+            }
+        }
+
+        // Display Clauses
+        function displayClauses(clauses) {
+            const container = document.getElementById('clauses-container');
+            
+            if (clauses.length === 0) {
+                container.innerHTML = '<div class="text-center py-12 text-slate-400">No clauses extracted</div>';
+                return;
+            }
+
+            container.innerHTML = clauses.map(clause => `
+                <div class="clause-card glass-panel rounded-lg p-6">
+                    <div class="flex items-start justify-between mb-3">
+                        <div class="flex-1">
+                            <div class="flex items-center space-x-3 mb-2">
+                                <span class="font-bold text-lg heading-font">${clause.clause_id}</span>
+                                <span class="severity-badge badge-${clause.risk_potential.toLowerCase()}">${clause.risk_potential}</span>
+                                <span class="px-3 py-1 bg-blue-500/20 text-blue-300 rounded-lg text-xs font-semibold">${clause.clause_type}</span>
+                            </div>
+                            ${clause.location ? `<p class="text-xs text-slate-500 mb-2">${clause.location}</p>` : ''}
+                        </div>
+                    </div>
+                    <p class="text-slate-300 mb-4 text-sm leading-relaxed">${clause.text}</p>
+                    <div class="space-y-3">
+                        <div>
+                            <p class="text-xs font-semibold text-slate-400 mb-1">Key Obligations:</p>
+                            <ul class="list-disc list-inside text-sm text-slate-300 space-y-1">
+                                ${clause.key_obligations.map(ob => `<li>${ob}</li>`).join('')}
+                            </ul>
+                        </div>
+                        ${clause.implicit_assumptions && clause.implicit_assumptions.length > 0 ? `
+                        <div>
+                            <p class="text-xs font-semibold text-slate-400 mb-1">Implicit Assumptions:</p>
+                            <ul class="list-disc list-inside text-sm text-slate-300 space-y-1">
+                                ${clause.implicit_assumptions.map(ia => `<li>${ia}</li>`).join('')}
+                            </ul>
+                        </div>
+                        ` : ''}
+                    </div>
+                </div>
+            `).join('');
+
+            switchTab('analysis');
+        }
+
+        // Analyze Compliance
+        async function analyzeCompliance(docId, regulations = ['GDPR', 'HIPAA', 'CCPA']) {
+            showLoading('Analyzing compliance...', 'Performing deep legal reasoning across regulations');
+            
+            try {
+                const response = await fetch('/api/analyze-compliance', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({doc_id: docId, regulations: regulations})
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    currentAnalysis = result.analysis;
+                    displayComplianceIssues(result.analysis.issues);
+                    generateHeatmap(docId);
+                    updateStats();
+                    showNotification('Compliance analysis complete!', 'success');
+                } else {
+                    showNotification(result.error || 'Analysis failed', 'error');
+                }
+            } catch (error) {
+                showNotification('Analysis error: ' + error.message, 'error');
+            } finally {
+                hideLoading();
+            }
+        }
+
+        // Display Compliance Issues
+        function displayComplianceIssues(issues) {
+            const container = document.getElementById('issues-container');
+            
+            if (issues.length === 0) {
+                container.innerHTML = '<div class="text-center py-12 text-green-400"><svg class="w-16 h-16 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><p>No compliance issues found!</p></div>';
+                return;
+            }
+
+            const severityColors = {
+                'Critical': 'border-red-500',
+                'High': 'border-amber-500',
+                'Medium': 'border-yellow-500',
+                'Low': 'border-green-500'
+            };
+
+            container.innerHTML = issues.map(issue => `
+                <div class="issue-card glass-panel rounded-lg p-6 ${severityColors[issue.severity] || 'border-slate-500'}" style="border-left-width: 4px;">
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="flex-1">
+                            <div class="flex items-center space-x-3 mb-2">
+                                <span class="font-bold heading-font">${issue.issue_id}</span>
+                                <span class="severity-badge badge-${issue.severity.toLowerCase()}">${issue.severity}</span>
+                                <span class="px-3 py-1 bg-purple-500/20 text-purple-300 rounded-lg text-xs font-semibold uppercase">${issue.issue_type}</span>
+                            </div>
+                            <p class="text-sm text-blue-300 font-semibold">${issue.regulation}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-3">
+                        <div>
+                            <p class="text-xs font-semibold text-slate-400 mb-1">Affected Clause:</p>
+                            <p class="text-sm text-slate-300 bg-white/5 p-3 rounded-lg">${issue.clause_text}</p>
+                        </div>
+                        
+                        <div>
+                            <p class="text-xs font-semibold text-slate-400 mb-1">Legal Reasoning:</p>
+                            <p class="text-sm text-slate-300">${issue.legal_reasoning}</p>
+                        </div>
+                        
+                        <div>
+                            <p class="text-xs font-semibold text-slate-400 mb-1">Penalty Exposure:</p>
+                            <p class="text-sm text-red-300 font-semibold">${issue.penalty_exposure}</p>
+                        </div>
+                        
+                        <div>
+                            <p class="text-xs font-semibold text-slate-400 mb-1">Recommended Remediation:</p>
+                            <p class="text-sm text-green-300">${issue.remediation}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-4 flex space-x-3">
+                        <button onclick="explainRisk('${issue.issue_id}', '${currentDocId}', 'executive')" class="px-4 py-2 bg-blue-500/20 hover:bg-blue-500/30 rounded-lg text-sm font-semibold transition-all">
+                            Explain for Executive
+                        </button>
+                        <button onclick="explainRisk('${issue.issue_id}', '${currentDocId}', 'engineer')" class="px-4 py-2 bg-purple-500/20 hover:bg-purple-500/30 rounded-lg text-sm font-semibold transition-all">
+                            Explain for Engineer
+                        </button>
+                        <button onclick="explainRisk('${issue.issue_id}', '${currentDocId}', 'legal')" class="px-4 py-2 bg-amber-500/20 hover:bg-amber-500/30 rounded-lg text-sm font-semibold transition-all">
+                            Legal Analysis
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Explain Risk
+        async function explainRisk(issueId, docId, audience) {
+            showLoading(`Generating ${audience} explanation...`, 'Creating human-readable analysis');
+            
+            try {
+                const response = await fetch('/api/explain-risk', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({issue_id: issueId, doc_id: docId, audience: audience})
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    showIssueModal(result.explanation, result.issue, audience);
+                } else {
+                    showNotification(result.error || 'Explanation failed', 'error');
+                }
+            } catch (error) {
+                showNotification('Error: ' + error.message, 'error');
+            } finally {
+                hideLoading();
+            }
+        }
+
+        // Show Issue Modal
+        function showIssueModal(explanation, issue, audience) {
+            const modal = document.getElementById('issue-modal');
+            const content = document.getElementById('issue-detail-content');
+            
+            const audienceLabels = {
+                'executive': '👔 Executive Summary',
+                'engineer': '⚙️ Technical Implementation',
+                'legal': '⚖️ Legal Analysis'
+            };
+            
+            content.innerHTML = `
+                <div class="mb-6">
+                    <span class="px-4 py-2 bg-blue-500/20 text-blue-300 rounded-lg text-sm font-semibold">${audienceLabels[audience]}</span>
+                    <div class="mt-3 flex items-center space-x-3">
+                        <span class="severity-badge badge-${issue.severity.toLowerCase()}">${issue.severity}</span>
+                        <span class="text-sm text-slate-400">${issue.regulation}</span>
+                    </div>
+                </div>
+                <div class="prose prose-invert prose-sm max-w-none">
+                    ${explanation}
+                </div>
+            `;
+            
+            modal.classList.remove('hidden');
+        }
+
+        function closeIssueModal() {
+            document.getElementById('issue-modal').classList.add('hidden');
+        }
+
+        // Generate Heatmap
+        async function generateHeatmap(docId) {
+            try {
+                const response = await fetch('/api/risk-heatmap', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({doc_id: docId})
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    displayHeatmap(result.heatmap_data);
+                }
+            } catch (error) {
+                console.error('Heatmap error:', error);
+            }
+        }
+
+        // Display Heatmap
+        function displayHeatmap(data) {
+            const container = document.getElementById('heatmap-container');
+            
+            const severityData = data.severity_distribution;
+            const total = Object.values(severityData).reduce((a, b) => a + b, 0);
+            
+            container.innerHTML = `
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div>
+                        <h3 class="text-lg font-bold mb-4">Severity Distribution</h3>
+                        <div class="space-y-3">
+                            ${Object.entries(severityData).map(([severity, count]) => {
+                                const percentage = total > 0 ? (count / total * 100).toFixed(1) : 0;
+                                return `
+                                    <div>
+                                        <div class="flex items-center justify-between mb-2">
+                                            <span class="text-sm font-semibold">${severity}</span>
+                                            <span class="text-sm text-slate-400">${count} (${percentage}%)</span>
+                                        </div>
+                                        <div class="progress-bar h-3">
+                                            <div class="h-full risk-${severity.toLowerCase()}" style="width: ${percentage}%"></div>
+                                        </div>
+                                    </div>
+                                `;
+                            }).join('')}
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-lg font-bold mb-4">Issues by Regulation</h3>
+                        <div class="space-y-2">
+                            ${Object.entries(data.regulation_risks).map(([regulation, count]) => `
+                                <div class="flex items-center justify-between p-3 glass-panel rounded-lg">
+                                    <span class="font-semibold">${regulation}</span>
+                                    <span class="px-3 py-1 bg-red-500/20 text-red-300 rounded-full text-sm font-bold">${count}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Generate Remediation Plan
+        async function generateRemediationPlan(docId) {
+            showLoading('Generating remediation plan...', 'Creating prioritized action items');
+            
+            try {
+                const response = await fetch('/api/remediation-plan', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({doc_id: docId})
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    displayRemediationPlan(result.remediation_plan);
+                    switchTab('remediation');
+                    showNotification('Remediation plan generated!', 'success');
+                } else {
+                    showNotification(result.error || 'Plan generation failed', 'error');
+                }
+            } catch (error) {
+                showNotification('Error: ' + error.message, 'error');
+            } finally {
+                hideLoading();
+            }
+        }
+
+        // Generate Remediation Plan from Tab
+        function generateRemediationPlanFromTab() {
+            if (!currentDocId) {
+                showNotification('Please upload and analyze a document first', 'error');
+                return;
+            }
+            generateRemediationPlan(currentDocId);
+        }
+
+        // Display Remediation Plan
+        function displayRemediationPlan(plan) {
+            const container = document.getElementById('remediation-container');
+            
+            container.innerHTML = `
+                <div class="mb-8 glass-panel rounded-xl p-6">
+                    <h3 class="text-xl font-bold heading-font mb-3">Plan Summary</h3>
+                    <p class="text-slate-300 mb-4">${plan.plan_summary}</p>
+                    <div class="flex items-center space-x-6 text-sm">
+                        <div class="flex items-center space-x-2">
+                            <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                            <span class="text-slate-400">Timeline: <strong class="text-white">${plan.estimated_timeline}</strong></span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <svg class="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                            </svg>
+                            <span class="text-slate-400">Actions: <strong class="text-white">${plan.total_actions}</strong></span>
+                        </div>
+                    </div>
+                </div>
+                
+                ${renderActionSection('Immediate Actions (0-7 days)', plan.immediate_actions, 'red')}
+                ${renderActionSection('Short-term Fixes (8-30 days)', plan.short_term, 'amber')}
+                ${renderActionSection('Medium-term Improvements (31-90 days)', plan.medium_term, 'yellow')}
+                ${renderActionSection('Long-term Enhancements (90+ days)', plan.long_term, 'green')}
+            `;
+        }
+
+        function renderActionSection(title, actions, color) {
+            if (!actions || actions.length === 0) return '';
+            
+            return `
+                <div class="mb-8">
+                    <h3 class="text-xl font-bold heading-font mb-4 flex items-center">
+                        <span class="w-3 h-3 rounded-full bg-${color}-500 mr-3"></span>
+                        ${title}
+                    </h3>
+                    <div class="space-y-4">
+                        ${actions.map((action, index) => `
+                            <div class="timeline-item glass-panel rounded-lg p-6">
+                                <h4 class="font-bold text-lg mb-3">${action.action_title || `Action ${index + 1}`}</h4>
+                                ${action.detailed_steps ? `
+                                    <div class="mb-3">
+                                        <p class="text-xs font-semibold text-slate-400 mb-2">Implementation Steps:</p>
+                                        <p class="text-sm text-slate-300">${action.detailed_steps}</p>
+                                    </div>
+                                ` : ''}
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                                    ${action.responsible_party ? `
+                                        <div>
+                                            <p class="text-xs font-semibold text-slate-400 mb-1">Responsible:</p>
+                                            <p class="text-sm text-blue-300">${action.responsible_party}</p>
+                                        </div>
+                                    ` : ''}
+                                    ${action.estimated_effort ? `
+                                        <div>
+                                            <p class="text-xs font-semibold text-slate-400 mb-1">Effort:</p>
+                                            <p class="text-sm text-purple-300">${action.estimated_effort}</p>
+                                        </div>
+                                    ` : ''}
+                                </div>
+                                ${action.dependencies ? `
+                                    <div class="mt-3">
+                                        <p class="text-xs font-semibold text-slate-400 mb-1">Dependencies:</p>
+                                        <p class="text-sm text-slate-300">${action.dependencies}</p>
+                                    </div>
+                                ` : ''}
+                                ${action.success_criteria ? `
+                                    <div class="mt-3">
+                                        <p class="text-xs font-semibold text-slate-400 mb-1">Success Criteria:</p>
+                                        <p class="text-sm text-green-300">${action.success_criteria}</p>
+                                    </div>
+                                ` : ''}
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Load Documents
+        async function loadDocuments() {
+            try {
+                const response = await fetch('/api/documents');
+                const result = await response.json();
+                
+                const container = document.getElementById('documents-list');
+                
+                if (result.documents.length === 0) {
+                    container.innerHTML = '<div class="text-center py-12 text-slate-400"><svg class="w-16 h-16 mx-auto mb-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg><p>No documents uploaded yet</p></div>';
+                    return;
+                }
+                
+                container.innerHTML = result.documents.map(doc => {
+                    const docTypeClass = `type-${doc.doc_type}`;
+                    const uploadDate = new Date(doc.upload_time).toLocaleString();
+                    
+                    return `
+                        <div class="glass-panel rounded-lg p-6 hover:bg-white/5 transition-all">
+                            <div class="flex items-start justify-between">
+                                <div class="flex-1">
+                                    <div class="flex items-center space-x-3 mb-2">
+                                        <svg class="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                        </svg>
+                                        <h3 class="font-bold text-lg">${doc.filename}</h3>
+                                        <span class="doc-type-tag ${docTypeClass}">${doc.doc_type}</span>
+                                        ${doc.processed ? '<span class="px-2 py-1 bg-green-500/20 text-green-300 rounded text-xs font-semibold">Processed</span>' : '<span class="px-2 py-1 bg-yellow-500/20 text-yellow-300 rounded text-xs font-semibold">Pending</span>'}
+                                    </div>
+                                    <p class="text-sm text-slate-400">Uploaded: ${uploadDate}</p>
+                                </div>
+                                <div class="flex space-x-2">
+                                    ${!doc.processed ? `
+                                        <button onclick="extractClauses('${doc.id}')" class="px-4 py-2 bg-blue-500/20 hover:bg-blue-500/30 rounded-lg text-sm font-semibold transition-all">
+                                            Extract Clauses
+                                        </button>
+                                    ` : `
+                                        <button onclick="analyzeCompliance('${doc.id}')" class="px-4 py-2 bg-purple-500/20 hover:bg-purple-500/30 rounded-lg text-sm font-semibold transition-all">
+                                            Analyze
+                                        </button>
+                                        <button onclick="generateRemediationPlan('${doc.id}')" class="px-4 py-2 bg-green-500/20 hover:bg-green-500/30 rounded-lg text-sm font-semibold transition-all">
+                                            Remediation Plan
+                                        </button>
+                                    `}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            } catch (error) {
+                console.error('Error loading documents:', error);
+            }
+        }
+
+        // Update Stats
+        function updateStats() {
+            // This would be enhanced with actual API calls in production
+            fetch('/api/documents')
+                .then(res => res.json())
+                .then(result => {
+                    document.getElementById('stat-documents').textContent = result.documents.length;
+                });
+            
+            if (currentAnalysis && currentAnalysis.issues) {
+                const critical = currentAnalysis.issues.filter(i => i.severity === 'Critical').length;
+                const high = currentAnalysis.issues.filter(i => i.severity === 'High').length;
+                
+                document.getElementById('stat-critical').textContent = critical;
+                document.getElementById('stat-high').textContent = high;
+            }
+        }
+
+        // Loading Overlay
+        function showLoading(message, detail) {
+            document.getElementById('loading-message').textContent = message;
+            document.getElementById('loading-detail').textContent = detail || 'Please wait';
+            document.getElementById('loading-overlay').classList.remove('hidden');
+        }
+
+        function hideLoading() {
+            document.getElementById('loading-overlay').classList.add('hidden');
+        }
+
+        // Notifications
+        function showNotification(message, type = 'info') {
+            const colors = {
+                'success': 'bg-green-500',
+                'error': 'bg-red-500',
+                'info': 'bg-blue-500'
+            };
+            
+            const notification = document.createElement('div');
+            notification.className = `fixed top-4 right-4 ${colors[type]} text-white px-6 py-4 rounded-lg shadow-2xl z-50 slide-in`;
+            notification.innerHTML = `
+                <div class="flex items-center space-x-3">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        ${type === 'success' ? '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>' : 
+                          type === 'error' ? '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>' :
+                          '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>'}
+                    </svg>
+                    <span class="font-semibold">${message}</span>
+                </div>
+            `;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 4000);
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            loadDocuments();
+            updateStats();
+        });
+    </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9bd4a55951515138',t:'MTc2ODMwNDcxMS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
